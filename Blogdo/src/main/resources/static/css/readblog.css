@@ -1,0 +1,41 @@
+@charset "UTF-8";
+
+    body  
+    {  
+        margin: 0;  
+        padding: 0;  
+        background-color:#fefbd8;  
+        font-family: 'Arial';  
+    }  
+    .blogbody{  
+            width: 1000px;  
+            overflow: hidden;  
+            margin: auto;  
+            margin: 20 0 0 450px;  
+            padding: 80px;  
+           background-color:hsla(0, 100%, 90%, 0.3); 
+            border-radius: 15px ;  
+              
+    } 
+   
+    
+    .comments{
+    
+    
+    overflow:scroll;
+    margin: auto;
+  width: 30%;
+  border: 3px solid green;
+  padding: 10px;
+    }
+    
+    
+    .commentsection
+    {
+   margin: auto;
+  width: 30%;
+  border: 3px solid green;
+  padding: 10px;
+    
+    }
+    

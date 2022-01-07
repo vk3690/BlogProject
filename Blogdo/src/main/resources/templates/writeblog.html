@@ -1,0 +1,28 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<link th:href="@{/blogwrite.css}" rel="stylesheet" />
+<title>Write Blog</title>
+</head>
+<body>
+<div align="center">
+    <h1>Your Blog</h1>
+    <form action="#" th:action="@{/saveBlog}" method="post">
+    <label>Author</label>
+     <input type="text" name="username" /><br/>
+        <label>Title</label>
+        <input type="text" name="title" /><br/>
+        <br>
+ 		<label>Add Tag</label>
+ 		 <input type="text" name="tags" /><br/>
+        <label>write blog here</label>
+        <br>
+         <textarea rows="100" cols="100"  name="blogPost"></textarea><br>
+         <button type="submit" >Submit</button>
+    </form>
+    </div>
+       
+</body>
+</html>

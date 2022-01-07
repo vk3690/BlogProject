@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title>Edit Comment</title>
+  </head>
+  <body>
+   <div align="center" "blogbody" >
+<form th:action="@{/updatecomment}" method="post">
+<textarea rows="5" cols="40" th:inline="text" name="editedcomment">[[${commentForEdit.userComment}]]</textarea>
+ <button class="button" th:value="${commentForEdit.id}" name="editedcommentid"  >submit</button>
+</form>
+</div>
+  </body>
+</html>

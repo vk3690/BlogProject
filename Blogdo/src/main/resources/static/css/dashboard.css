@@ -1,0 +1,22 @@
+@charset "UTF-8";
+
+   body  
+    {  
+        margin: 0;  
+        padding: 0;  
+        background-color:#fefbd8;  
+        font-family: 'Arial';  
+    } 
+    
+  .blog  {
+     margin: 20 0 0 450px;  
+            padding: 40px;  
+           background-color:hsla(0, 100%, 90%, 0.3); 
+           }
+.sortby{
+	float:right;
+}
+
+.nextpage{
+	
+}

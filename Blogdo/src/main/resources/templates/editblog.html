@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<link th:href="@{/blogwrite.css}" rel="stylesheet" />
+<title>Blog</title>
+</head>
+<body>
+<div class="blogbody" align="center">
+<form method="POST" th:action="@{/updateBlogPost}">
+<b>Title</b>
+<br>
+<textarea rows="1" cols="70" th:inline="text" name="editedtitle">[[${postData.title}]]</textarea>
+<br>
+    <textarea rows="1" cols="70" th:inline="text" name="editedtags">[[${tags}]]</textarea>
+    <br>
+<b>Edit blog</b>
+<br>
+<textarea rows="80" cols="100" th:inline="text" name="editedblog">[[${postData.blogPost}]]</textarea>
+<br>
+    <td><button type="submit" name="blogId" th:value="${postData.id}">submit</button></td>
+</form> 
+
+</div>
+</body>
+</html>

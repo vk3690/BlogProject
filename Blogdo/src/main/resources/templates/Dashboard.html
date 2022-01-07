@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta charset="UTF-8">
+<title>Dashboard</title>
+<link th:href="@{/css/dashboard.css}" rel="stylesheet" />
+</head>
+<body>
+	<h1 align="center">Home</h1>
+	<br>
+	<a th:href="@{/blog}">home</a>
+    <br>
+    <a th:href="@{/logout}">logout</a>
+	<div align="center">
+	 <form action="#" th:action="@{/searchby}" method="post">
+	 <label>search</label>
+	 <input type="text" name="keywordToSearch" th:value="${keywordToSearch}" >
+      <button class="button" >search</button>
+                     </form></div>
+	<br>
+	
+	<div  class="sortby">
+	<span>sort by</span>
+	<form th:action="@{/sortby}" method="post">
+	<td><select name="sortOrder" >
+	<option th:each="sort : ${sortOrderList}" th:text="${sort}"/>
+	 
+</select>
+  <button class="button" type="submit" >sort</button>
+                     </form>
+        <div>
+            <form th:action="@{/filter}" method="get">
+                <tr>
+
+                    <td>Tags</td>
+                    <td>
+                        <th:block th:each="tag : ${tags}">
+                            <input type="checkbox" name="tag" th:value="${tag}"/>
+                            <label th:text="${tag}"></label>
+                        </th:block>
+                    </td>
+                </tr>
+
+                <br>
+                <tr>
+                    <td>Authors</td>
+                    <td>
+                        <th:block th:each="author : ${authors}">
+                            <input type="checkbox" name="author" th:value="${author}"/>
+                            <label th:text="${author}"></label>
+                        </th:block>
+                    </td>
+                    <br>
+                    <label>From</label>
+                    <input type="date" name="from" palaceholder="yyyy-mm-dd">
+
+                    <label>to</label>
+                    <input type="date" name="to" palaceholder="yyyy-mm-dd" >
+                </tr>
+                <button class="button" type="submit" name="keywordToSearch"  th:value="${keywordToSearch}">filter</button>
+            </form>
+        </div>
+<!--    <div th:if ="${#request.userPrincipal}">-->
+
+<<form action="#" th:action="@{/postblog}" method="post">
+                     <button class="button" name="username"  th:value="${username}">write a blog</button>
+ </form>
+<br>
+<div class="blog" th:block  th:each="all : ${allblogs}" >
+        <div class="right" th:object="${all}" >
+            <p>
+                Title :
+                <td th:text="${all.title}">
+            </p>
+            </br>
+             <p>
+                Blog :
+                <td th:text="${all.excerpt}">
+            </p>
+            <p>
+            Author:
+            <td th:text="${all.username}">
+            </p>
+
+                  <form action="#" th:action="@{/readblog}" method="post" th:object="${all}">     
+                     <button class="button" name="blogId"  th:value="*{id}">open</button>
+                     </form>
+
+<!--            <div th:if ="${#request.userPrincipal}">-->
+<!--            <div th:if ="${#authentication.getPrincipal().getUsername()} eq *{username}">-->
+            <div>
+                      <form action="#" th:action="@{/deleteblog}" method="post" th:object="${all}">     
+                     <button class="button" name="blogId"  th:value="*{id}">delete</button>
+                      </form> </div>
+        </div>
+</div>
+</div>
+<div align="center" class="nextpage">
+
+ <form action="#" th:action="@{/nextpage}" method="get">    
+<input type="hidden" name="authors" th:value="${authors}">
+     <input type="hidden" name="tags" th:value="${tags}">
+     <input type="hidden" name="from" th:value="${from}">
+     <input type="hidden" name="to" th:value="${to}">
+     <input type="hidden" name="keywordToSearch" th:value="${keywordToSearch}">
+     <input type="hidden" name="sortOrder" th:value="${sortOrder}">
+    <button class="button" name="pageNo"  th:value="${pageNo}">next page-></button>
+                     </form> 
+   </div>  
+   <div align="center" class="nextpage">
+ <form action="#" th:action="@{/prevpage}" method="get">  
+    <input type="hidden" name="tags" th:value="${tags}">
+     <input type="hidden" name="authors" th:value="${authors}">
+     <input type="hidden" name="from" th:value="${from}">
+     <input type="hidden" name="keywordToSearch" th:value="${keywordToSearch}">
+     <input type="hidden" name="to" th:value="${to}">
+     <input type="hidden" name="sortOrder" th:value="${sortOrder}">
+    <button class="button" name="pageNo"  th:value="${pageNo}"><-prev page</button>
+                     </form> 
+   </div>
+   <span>    pageno:</span><td th:text="${pageNo}">
+   <br>                     
+</body>
+</html>
