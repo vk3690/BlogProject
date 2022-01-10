@@ -1,5 +1,6 @@
 package com.post.Blogdo.Models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
@@ -22,7 +23,7 @@ public class Comment {
 	public void setPost(Post post) {
 		this.post = post;
 	}
-
+	@JsonBackReference
 	@ManyToOne()
 	@JoinColumn(name="post_id")
 	private Post post;

@@ -13,10 +13,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Service
-public class BlogService {
+public class PostService {
     @Autowired
     private PostRepo postRepo;
     @Autowired
@@ -49,9 +50,23 @@ public class BlogService {
 }
     public List<Post> testQ1(String searchKeyword, String tags, String author, Integer pageNo, Date startDate,
                              Date endDate, String keyWordToBeSorted) {
-        ArrayList<Integer> allPostedBlogIds = postRepo.findIdsBetweenDates(startDate,endDate);
+        ArrayList<Integer> allPostedBlogIds = new ArrayList<>();
+        String defaultStartDate="2021-12-25";
+        String deafalutEndDate="2022-12-25";
+        SimpleDateFormat formatter=new SimpleDateFormat("yyyy-MM-dd");
+        Date startDateDefault=null;
+        Date endDateDefault=null;
+        try {
+             startDateDefault = formatter.parse(defaultStartDate);
+            endDateDefault = formatter.parse(deafalutEndDate);
+        }
+        catch (Exception e)
+        {
+
+        }
+//        ArrayList<Integer> allPostedBlogIds = postRepo.findIdsOfBetweenDates(startDate,endDate, allPostBlogIds);
         System.out.println("");
-        //   System.out.println("vhjnkm,  "+blogPage.size()+"   hjn564545");
+          System.out.println("vhjnkm,  "+!startDateDefault.equals(startDate)+"   hjn564545");
         System.out.println("");
         //   ArrayList<Integer> getIdsByDate=blogRepo.findIdsBetweenDates(startDate,endDate);
         // allPostedBlogIds.clear();
@@ -66,13 +81,20 @@ public class BlogService {
             allPostedBlogIds.addAll(searchidtags);
             allPostedBlogIds.addAll(searchid);
         }
+        else{
+            allPostedBlogIds=postRepo.findByIds();
+        }
+
+    if(!startDate.equals(defaultStartDate) || !endDate.equals(deafalutEndDate))
+    {
+        allPostedBlogIds=postRepo.findIdsOfBetweenDates(startDate,endDate,allPostedBlogIds);
+    }
 
         if(!AuthorsToFilter[0].equals("") || !tagsToFilter[0].equals(""))
         {
             ArrayList<Integer> searchAuthors= postRepo.filterByAuthorName(AuthorsToFilter,allPostedBlogIds);
             ArrayList<Integer> searchTags=tagRepo.filterByTags(tagsToFilter,allPostedBlogIds);
-            allPostedBlogIds.clear();
-            allPostedBlogIds.addAll(searchTags);
+            allPostedBlogIds=searchTags;
             allPostedBlogIds.addAll(searchAuthors);
         }
         Pageable page = PageRequest.of(pageNo, 5, Sort.by(keyWordToBeSorted));
@@ -96,6 +118,10 @@ public class BlogService {
         postTag.setTag(editedtags);
         postTagRepo.save(postTag);
         return editedBlog;
+    }
+
+    public void deleteBlog(Integer blogId) {
+        postRepo.deleteById(blogId);
     }
 
 }

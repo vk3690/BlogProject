@@ -6,7 +6,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -39,12 +38,14 @@ public Page<Post> findAll(Pageable pages);
 
 
     Page<Post> findByIdIn(List<Integer> alis, Pageable page);
+
     @Query(value = "select post.id from post",nativeQuery = true)
-    ArrayList<Integer> findByListOfIds();
+    ArrayList<Integer> findByIds();
 
 
-    @Query(value= "select post.id from post  where post.updated_at BETWEEN :startDate AND :endDate",nativeQuery = true)
-    ArrayList<Integer> findIdsBetweenDates(Date startDate,Date endDate);
+    @Query(value= "select * from (select * from post  where post.updated_at BETWEEN :startDate AND :endDate) as" +
+            " foo where foo.id in :allPostIds",nativeQuery = true)
+    ArrayList<Integer> findIdsOfBetweenDates(Date startDate, Date endDate, ArrayList<Integer> allPostIds);
 
 
 }

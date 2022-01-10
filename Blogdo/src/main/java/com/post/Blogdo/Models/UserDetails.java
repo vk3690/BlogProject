@@ -1,38 +1,23 @@
 package com.post.Blogdo.Models;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import java.util.List;
+import org.springframework.stereotype.Component;
 
-public class User {
+import javax.persistence.*;
+import javax.validation.constraints.Email;
+
+@Entity
+@Component
+public class UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
+    @Column(unique = true)
     private String username;
+    @Email
+    @Column(unique = true)
+    private String mail;
     private  String password;
     private String authorities;
-
-    public List<Post> getPost() {
-        return post;
-    }
-
-    public void setPost(List<Post> post) {
-        this.post = post;
-    }
-
-    @OneToMany()
-    private List<Post> post;
-    public String getAuthorities() {
-        return authorities;
-    }
-
-    public void setAuthorities(String authorities) {
-        this.authorities = authorities;
-    }
-
 
 
     public String getMail() {
@@ -42,8 +27,6 @@ public class User {
     public void setMail(String mail) {
         this.mail = mail;
     }
-
-    private String mail;
 
     public Integer getId() {
         return id;
@@ -69,5 +52,12 @@ public class User {
         this.password = password;
     }
 
+    public String getAuthorities() {
+        return authorities;
+    }
+
+    public void setAuthorities(String authorities) {
+        this.authorities = authorities;
+    }
 
 }

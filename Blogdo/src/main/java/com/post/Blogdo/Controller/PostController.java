@@ -1,10 +1,9 @@
 package com.post.Blogdo.Controller;
 
 
-import com.post.Blogdo.Models.Comment;
 import com.post.Blogdo.Models.Post;
 import com.post.Blogdo.Repos.PostRepo;
-import com.post.Blogdo.Service.BlogService;
+import com.post.Blogdo.Service.PostService;
 import com.post.Blogdo.Service.CommentService;
 import com.post.Blogdo.Service.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,14 +23,15 @@ import java.util.Optional;
 @Controller
 public class PostController {
     @Autowired
-    private BlogService blogService;
+    private PostService blogService;
     @Autowired
     private TagService tagService;
     @Autowired
     private CommentService commentService;
     @Autowired
     private PostRepo postRepo;
-    @RequestMapping("/postblog")
+
+    @PostMapping("/postblog")
     public String writeBlog() {
         return "writeblog.html";
     }
@@ -65,14 +65,15 @@ public class PostController {
     public String readBlog(@RequestParam("blogId") Integer blogId,Model model)
     {
         Optional<Post> blogPost=postRepo.findById(blogId);
-        Post blogPostToRead=blogPost.get();
+        Post blogPostToDisplay=blogPost.get();
        // ArrayList<Comment> commentsOnBlogPost=commentService.getCommentsById(blogId);
         System.out.println();
-        System.out.println(blogPostToRead.getComment().size());
+        System.out.println(blogPostToDisplay.getComment().size());
         System.out.println();
         //String blogTags=blogService.blogTags(blogId);
-        model.addAttribute("comments",blogPostToRead.getComment());
-        model.addAttribute("blogDao",blogPostToRead);
+        model.addAttribute("comments",blogPostToDisplay.getComment());
+        model.addAttribute("blogDao",blogPostToDisplay);
+
         //	model.addAttribute("blogTags",blogTags);
         return "Readblog.html";
     }

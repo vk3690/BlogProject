@@ -15,12 +15,11 @@
 	
 	<td th:text="*{blogPost}"></td>
 
-<!--    <div th:if ="${#request.userPrincipal}">-->
-<!--        <div th:if ="${#authentication.getPrincipal().getUsername()} eq *{username}">-->
-    <div>
+    <div th:if ="${#request.userPrincipal}">
+       <div th:if ="${#authentication.getPrincipal().getUsername()} eq *{username}">
 	<form method="POST" th:action="@{/editblog}">
     <td><button type="submit" name="blogId" th:value="*{id}">edit</button></td>
-    </form> </div>
+    </form> </div></div>
     
 </div>
 <br>
@@ -28,12 +27,14 @@
 	<div class="comment">
 	<span><td th:text="${comment.username}"></td></span><br>
 	<td th:text="${comment.userComment}"></td>
+        <div th:if ="${#request.userPrincipal}">
+            <div th:if ="${#authentication.getPrincipal().getUsername()} eq ${blogDao.username}">
 	<form method="POST" th:action="@{/editcomment}">
     <td align="center"><button type="submit" name="id" th:value="${comment.id}" >edit</button></td>
 </form> 
 <form method="POST" th:action="@{/deletecomment}">
     <td><button type="submit" name="id" th:value="${comment.id}" class="link-button">delete</button></td>
-</form> 
+</form> </div></div>
 	
 </div>
 </div>

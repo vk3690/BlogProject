@@ -2,7 +2,7 @@ package com.post.Blogdo.Controller;
 
 
 import com.post.Blogdo.Models.Comment;
-import com.post.Blogdo.Service.BlogService;
+import com.post.Blogdo.Service.PostService;
 import com.post.Blogdo.Service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,7 +20,7 @@ public class CommentController {
 	
 	
 	@Autowired
-	private BlogService blogService;
+	private PostService blogService;
 	@Autowired
 	private CommentService commentService;
 

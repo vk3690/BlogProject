@@ -11,7 +11,11 @@
 	<br>
 	<a th:href="@{/blog}">home</a>
     <br>
-    <a th:href="@{/logout}">logout</a>
+    <div th:if ="!${#request.userPrincipal}">
+        <a th:href="@{/login}">Login</a>
+    </div>
+    <div th:if= "${#request.userPrincipal}">
+    <a th:href="@{/logout}">Logout</a></div>
 	<div align="center">
 	 <form action="#" th:action="@{/searchby}" method="post">
 	 <label>search</label>
@@ -61,11 +65,10 @@
                 <button class="button" type="submit" name="keywordToSearch"  th:value="${keywordToSearch}">filter</button>
             </form>
         </div>
-<!--    <div th:if ="${#request.userPrincipal}">-->
-
-<<form action="#" th:action="@{/postblog}" method="post">
+<div th:if ="${#request.userPrincipal}">
+<form action="#" th:action="@{/postblog}" method="post">
                      <button class="button" name="username"  th:value="${username}">write a blog</button>
- </form>
+        </form></div>
 <br>
 <div class="blog" th:block  th:each="all : ${allblogs}" >
         <div class="right" th:object="${all}" >
@@ -83,19 +86,23 @@
             <td th:text="${all.username}">
             </p>
 
-                  <form action="#" th:action="@{/readblog}" method="post" th:object="${all}">     
+                  <form action="#" th:action="@{/readblog}" method="post" th:object="${all}">
+                      <input type="hidden" name="username" th:value="${all.username}">
                      <button class="button" name="blogId"  th:value="*{id}">open</button>
                      </form>
-
-<!--            <div th:if ="${#request.userPrincipal}">-->
-<!--            <div th:if ="${#authentication.getPrincipal().getUsername()} eq *{username}">-->
-            <div>
+<!--            <h2><td th:text="${#authentication.getPrincipal().getUsername()}"></td></h2>-->
+            <div th:if ="${#request.userPrincipal}">
+                <h2><td th:text="${#authentication.getPrincipal().getUsername()}"></td></h2>
+        <div th:if ="${#authentication.getPrincipal().getUsername()} eq *{username} or
+        ${#strings.contains(#authentication.principal.authorities, 'ROLE_ADMIN')}">
                       <form action="#" th:action="@{/deleteblog}" method="post" th:object="${all}">     
                      <button class="button" name="blogId"  th:value="*{id}">delete</button>
-                      </form> </div>
+                      </form> </div></div>
         </div>
 </div>
+        <br>
 </div>
+    <br>
 <div align="center" class="nextpage">
 
  <form action="#" th:action="@{/nextpage}" method="get">    

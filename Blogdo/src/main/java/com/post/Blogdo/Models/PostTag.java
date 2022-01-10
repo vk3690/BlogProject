@@ -1,5 +1,6 @@
 package com.post.Blogdo.Models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
@@ -14,6 +15,7 @@ public class PostTag {
 	private String tag;
 	private Date createdAt;
 	private Date updatedAt;
+	@JsonBackReference
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name="post_id", referencedColumnName = "id")
 	private Post post;

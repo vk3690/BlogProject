@@ -1,6 +1,6 @@
 
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
 <meta charset="ISO-8859-1">
 <link th:href="@{/blogwrite.css}" rel="stylesheet" />
@@ -10,8 +10,8 @@
 <div align="center">
     <h1>Your Blog</h1>
     <form action="#" th:action="@{/saveBlog}" method="post">
-    <label>Author</label>
-     <input type="text" name="username" /><br/>
+        <input type="hidden" name="username" th:value="${#authentication.getPrincipal().getUsername()}">
+
         <label>Title</label>
         <input type="text" name="title" /><br/>
         <br>

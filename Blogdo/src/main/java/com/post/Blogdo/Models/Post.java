@@ -1,6 +1,7 @@
 package com.post.Blogdo.Models;
 
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
@@ -24,9 +25,10 @@ public class Post {
 	private Date createdAt;
     private String username;
     private Date updatedAt;
+	@JsonManagedReference
 	@OneToMany(mappedBy = "post",cascade =  CascadeType.ALL)
 	private List<Comment> comment;
-
+	@JsonManagedReference
 	@OneToOne(mappedBy = "post",cascade = CascadeType.ALL)
 	private PostTag tag;
 
