@@ -41,7 +41,7 @@ public class UserController {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         String encodedPassword = passwordEncoder.encode(userDetails.getPassword());
         userDetails.setPassword(encodedPassword);
-        userDetails.setAuthorities("ROLE_ADMIN");
+        userDetails.setAuthorities("ROLE_USER");
         System.out.println("ghh jnkm,"+userDetails.getPassword()+"     "+userDetails.getAuthorities());
         userRepo.save(userDetails);
         return "redirect:"+"/login";
