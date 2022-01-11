@@ -23,7 +23,7 @@ public class MyUserDetails implements org.springframework.security.core.userdeta
         System.out.println("username");
         System.out.println(user.getAuthorities()+"fgcghvjknlmcxfgcvhjn,m");
         System.out.println("");
-        list.add(new SimpleGrantedAuthority("ROLE_" + user.getAuthorities()));
+        list.add(new SimpleGrantedAuthority(user.getAuthorities()));
        return list;
         }
 

@@ -13,8 +13,8 @@ public class Comment {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String username;
-	@Lob
 	private String mail;
+	private String userComment;
 
 	public Post getPost() {
 		return post;
@@ -34,7 +34,7 @@ public class Comment {
 	public void setMail(String mail) {
 		this.mail = mail;
 	}
-	private String userComment;
+
 	private Date createdAt;
 	public Date getCreatedAt() {
 		return createdAt;

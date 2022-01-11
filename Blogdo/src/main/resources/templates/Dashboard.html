@@ -9,7 +9,7 @@
 <body>
 	<h1 align="center">Home</h1>
 	<br>
-	<a th:href="@{/blog}">home</a>
+	<a th:href="@{/}">home</a>
     <br>
     <div th:if ="!${#request.userPrincipal}">
         <a th:href="@{/login}">Login</a>
@@ -92,7 +92,6 @@
                      </form>
 <!--            <h2><td th:text="${#authentication.getPrincipal().getUsername()}"></td></h2>-->
             <div th:if ="${#request.userPrincipal}">
-                <h2><td th:text="${#authentication.getPrincipal().getUsername()}"></td></h2>
         <div th:if ="${#authentication.getPrincipal().getUsername()} eq *{username} or
         ${#strings.contains(#authentication.principal.authorities, 'ROLE_ADMIN')}">
                       <form action="#" th:action="@{/deleteblog}" method="post" th:object="${all}">     

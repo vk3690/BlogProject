@@ -80,7 +80,7 @@ public class SecurityConfig   {
 
                     //  .antMatchers("/dashboard","/blog","/nextpage","/prevpage","/searchby","/filter",
                     //          "/sortby","/readblog","/signup").permitAll()
-                    .antMatchers("/", "/dashboard", "/nextpage", "/prevpage", "/sortBy", "/searchby", "/sortBy"
+                    .antMatchers("/", "/dashboard", "/nextpage", "/prevpage", "/sortBy", "/searchby", "/filter"
                             , "/readblog", "/login", "/writeblog", "/saveBlog", "/signup", "/saveregister", "/testq").permitAll()
                     .antMatchers("/resources/**").permitAll()
                     .anyRequest().authenticated()
@@ -114,8 +114,9 @@ public class SecurityConfig   {
         protected void configure(HttpSecurity http) throws Exception {
 
             http.csrf().disable();
-            http.antMatcher( "/api/**").authorizeRequests().antMatchers("/api/login").permitAll()
-                    .antMatchers("/api/dash").authenticated()
+            http.antMatcher( "/api/**").authorizeRequests().antMatchers("/api/login","/api/signup",
+                    "/api/dash","api/postComment").permitAll()
+                    .antMatchers("/api/writeblog").authenticated()
                     .and()
                     .exceptionHandling().and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
             http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);

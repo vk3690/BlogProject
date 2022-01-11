@@ -6,11 +6,13 @@ import com.post.Blogdo.Models.PostTag;
 import com.post.Blogdo.Repos.PostRepo;
 import com.post.Blogdo.Repos.PostTagRepo;
 import com.post.Blogdo.Repos.TagRepo;
+import com.post.Blogdo.Security.MyUserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
@@ -25,19 +27,19 @@ public class PostService {
     @Autowired
     private TagRepo tagRepo;
 
-    public void saveBlogPost(Post blogModel) {
+    public void saveBlogPost(Post post) {
         Date date = new Date();
         //BlogModel blogModel=new BlogModel();
-        String blog = blogModel.getBlogPost();
+        String blog = post.getBlogPost();
         String excerpt = "";
         String[] temp = blog.split(" ");
-        for (int index = 0; index <= 25; index++) {
+        for (int index = 0; index <= (temp.length)*0.10; index++) {
             excerpt = excerpt + " " + temp[index];
         }
-        blogModel.setExcerpt(excerpt);
-        blogModel.setCreatedAt(date);
-        blogModel.setUpdatedAt(date);
-        postRepo.save(blogModel);
+        post.setExcerpt(excerpt);
+        post.setCreatedAt(date);
+        post.setUpdatedAt(date);
+        postRepo.save(post);
     }
 
 
@@ -62,7 +64,7 @@ public class PostService {
         }
         catch (Exception e)
         {
-
+            System.out.println(e);
         }
 //        ArrayList<Integer> allPostedBlogIds = postRepo.findIdsOfBetweenDates(startDate,endDate, allPostBlogIds);
         System.out.println("");
@@ -123,5 +125,23 @@ public class PostService {
     public void deleteBlog(Integer blogId) {
         postRepo.deleteById(blogId);
     }
+    
+    public String deletePostFromApi(Integer postId)
+    {
+        Optional<Post> post=postRepo.findById(postId);
+        Post postToDelete=post.get();
+        MyUserDetails myUserDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication()
+                .getPrincipal();
+        if(myUserDetails.getUsername().equals(postToDelete.getUsername()) ||
+                myUserDetails.getAuthorities().contains("ROLE_ADMIN")) {
+
+            postRepo.deleteById(postId);
+            return "post id deleted";
+        }
+        else{
+            return "not authorised to delete";
+            }
+    }
+        
 
 }

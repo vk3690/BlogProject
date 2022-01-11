@@ -16,7 +16,8 @@
 	<td th:text="*{blogPost}"></td>
 
     <div th:if ="${#request.userPrincipal}">
-       <div th:if ="${#authentication.getPrincipal().getUsername()} eq *{username}">
+       <div th:if ="${#authentication.getPrincipal().getUsername()} eq *{username} or
+${#strings.contains(#authentication.principal.authorities, 'ROLE_ADMIN')}">
 	<form method="POST" th:action="@{/editblog}">
     <td><button type="submit" name="blogId" th:value="*{id}">edit</button></td>
     </form> </div></div>
@@ -25,10 +26,12 @@
 <br>
 <div class="comments"  th:each="comment:${comments}">
 	<div class="comment">
-	<span><td th:text="${comment.username}"></td></span><br>
-	<td th:text="${comment.userComment}"></td>
+
+	<span>username : <td th:text="${comment.username}"></td></span><br>
+	comment : <td th:text="${comment.userComment}"></td>
         <div th:if ="${#request.userPrincipal}">
-            <div th:if ="${#authentication.getPrincipal().getUsername()} eq ${blogDao.username}">
+            <div th:if ="${#authentication.getPrincipal().getUsername()} eq ${blogDao.username}
+or ${#authentication.getPrincipal().getUsername()} eq ${comment.username}">
 	<form method="POST" th:action="@{/editcomment}">
     <td align="center"><button type="submit" name="id" th:value="${comment.id}" >edit</button></td>
 </form> 
