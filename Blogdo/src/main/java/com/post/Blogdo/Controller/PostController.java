@@ -94,6 +94,13 @@ public class PostController {
         	model.addAttribute("blogTags",blogPostToDisplay.getTag().getTag());
         return "Readblog.html";
     }
+    @RequestMapping("/deleteblog")
+    public String deleteBlog(@RequestParam("blogId") Integer blogId)
+    {
+        blogService.deleteBlog(blogId);
+        return "redirect:"+"/";
+    }
+
 
     @PostMapping("/editblog")
     public String editBlog(@RequestParam("blogId") Integer blogId,Model model)
@@ -119,6 +126,7 @@ public class PostController {
        // tagService.updateTagsOfBlog(postId,editedtags);
         return "redirect:"+"/";
     }
+
 
 
 
