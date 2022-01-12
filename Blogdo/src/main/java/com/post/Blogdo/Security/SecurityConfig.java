@@ -115,8 +115,10 @@ public class SecurityConfig   {
 
             http.csrf().disable();
             http.antMatcher( "/api/**").authorizeRequests().antMatchers("/api/login","/api/signup",
-                    "/api/dash","api/postComment").permitAll()
-                    .antMatchers("/api/writeblog").authenticated()
+                    "/api/dashboard","api/postComment","/api/readblog","/api/postComment","/api/updateComment"
+                                    ,"/api/deleteComment").permitAll()
+                    .antMatchers("/api/writeblog","/api/deleteBlogPost",
+                            "/api/updateBlogPost").authenticated()
                     .and()
                     .exceptionHandling().and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
             http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);

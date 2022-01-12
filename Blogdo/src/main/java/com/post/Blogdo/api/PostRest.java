@@ -86,6 +86,7 @@ public class PostRest {
     public String saveBlog(@RequestBody Post post,@RequestParam(name="tags") String tags) {
         MyUserDetails myUserDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication()
                 .getPrincipal();
+        post.setUsername(myUserDetails.getUsername());
         if(myUserDetails.getUsername()!=null) {
             tagService.storeTagsOfBlogs(post, tags);
             postService.saveBlogPost(post);

@@ -24,15 +24,21 @@ public class CommentRest {
     @PostMapping("/api/postComment")
     public String postComment( @RequestBody Comment comment, @RequestParam(name="blogId") Integer blogId)
     {
-//        @RequestParam(name="comment") String comment, @RequestParam("username") String username,
-//                              @RequestParam("mail") String mail
-//@RequestBody Comment comments
+
         commentService.postComment(comment.getUserComment(),comment.getUsername(),comment.getMail(),blogId);
         return  "comment posted sucessful";
     }
 
+    @PostMapping("/api/updateComment")
+    public String updateComment(@RequestParam(name="updatedComment") String updatedComment,
+                                 @RequestParam(name="commentId") Integer commentId)
+    {
+      return   commentService.updateApiComment(commentId,updatedComment);
+    }
+
     @DeleteMapping("/api/deleteComment")
-    public void deleteComment(@RequestParam(name="commentId") Integer commentId, HttpServletResponse response) throws IOException {
+    public void deleteComment(@RequestParam(name="commentId") Integer commentId, HttpServletResponse response)
+            throws IOException {
 
        String responses= commentService.deleteApiComment(commentId);
         response.sendRedirect("/api/dash");

@@ -31,7 +31,7 @@ public class UserRest {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         String encodedPassword = passwordEncoder.encode(userDetails.getPassword());
         userDetails.setPassword(encodedPassword);
-        userDetails.setAuthorities("USER");
+        userDetails.setAuthorities("ROLE_USER");
         userRepo.save(userDetails);
         return "registration Succesful";
     }
