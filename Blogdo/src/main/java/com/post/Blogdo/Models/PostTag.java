@@ -20,7 +20,6 @@ public class PostTag {
 	@JoinColumn(name="post_id", referencedColumnName = "id")
 	private Post post;
 
-
 	public Date getUpdatedAt() {
 		return updatedAt;
 	}

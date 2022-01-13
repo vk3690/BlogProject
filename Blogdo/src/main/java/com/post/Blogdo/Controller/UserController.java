@@ -35,14 +35,11 @@ public class UserController {
       UserDetails foundUser= userRepo.findByUsername(userDetails.getUsername());
         if (foundUser!=null ||results.hasErrors()) {
             return "redirect:"+"/signup";
-
         }
-        System.out.println("ghh jnkm,"+userDetails.getUsername());
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         String encodedPassword = passwordEncoder.encode(userDetails.getPassword());
         userDetails.setPassword(encodedPassword);
         userDetails.setAuthorities("ROLE_USER");
-        System.out.println("ghh jnkm,"+userDetails.getPassword()+"     "+userDetails.getAuthorities());
         userRepo.save(userDetails);
         return "redirect:"+"/login";
     }

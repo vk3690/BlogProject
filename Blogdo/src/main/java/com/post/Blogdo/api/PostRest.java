@@ -31,30 +31,7 @@ public class PostRest {
     private PostService postService;
     @Autowired
     private PostRepo postRepo;
-    @Autowired
-    private JwtUtil jwtUtil;
 
-    @Autowired
-    private AuthenticationManager authenticationManager;
-
-
-    @PostMapping("/api/login")
-    public String AuthnticateUser(@RequestBody UserAuthentication authRequest) throws Exception {
-
-        String pw_hash = BCrypt.hashpw(authRequest.getPassword(),BCrypt.gensalt());
-        System.out.println(""+authRequest.getPassword());
-        System.out.println("it is working");
-        System.out.println(""+authRequest.getUserName());
-        try {
-
-           authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(authRequest.getUserName(),authRequest.getPassword())
-           );
-        } catch (Exception ex) {
-            throw new Exception("inavalid username/password");
-        }
-        return jwtUtil.generateToken(authRequest.getUserName());
-    }
 
 
 
@@ -92,10 +69,9 @@ public class PostRest {
             postService.saveBlogPost(post);
             return "blog is posted";
         }
-        //System.out.println(tags);
+
         return "login to post";
     }
-
 
     @PostMapping("/api/updateBlogPost")
     public String updateComment(@RequestBody Post post, @RequestParam("postId") Integer postId,
@@ -121,11 +97,6 @@ public class PostRest {
        return postService.deletePostFromApi(blogId);
 
     }
-
-
-
-
-
 
 }
 

@@ -17,8 +17,7 @@ import java.util.Optional;
 
 @Controller
 public class CommentController {
-	
-	
+
 	@Autowired
 	private PostService blogService;
 	@Autowired
@@ -26,7 +25,8 @@ public class CommentController {
 
 	 @PostMapping("/postComment")
 	 public String postComment(@RequestParam("comment") String comment,@RequestParam("username") String username,
-			 @RequestParam("mail") String mail, @RequestParam("blogId") Integer blogId,RedirectAttributes redirectAttributes)
+			 @RequestParam("mail") String mail, @RequestParam("blogId") Integer blogId,
+							   RedirectAttributes redirectAttributes)
 	 {
 		 
 		 commentService.postComment(comment,username,mail,blogId);
@@ -45,7 +45,8 @@ public class CommentController {
 	 }
 	 
 	 @PostMapping("/updatecomment")
-	 public String updateComment(@RequestParam("editedcommentid") Integer editedCommentId,@RequestParam("editedcomment") String updatedComment,
+	 public String updateComment(@RequestParam("editedcommentid") Integer editedCommentId,
+								 @RequestParam("editedcomment") String updatedComment,
 			 RedirectAttributes redirectAttributes)
 	 {
 		 System.out.print("in update");
@@ -56,7 +57,8 @@ public class CommentController {
 	 }
 
 	 @PostMapping("/deletecomment")
-	 public String deleteComment(@RequestParam("id") Integer editedCommentId,RedirectAttributes redirectAttributes)
+	 public String deleteComment(@RequestParam("id") Integer editedCommentId,
+								 RedirectAttributes redirectAttributes)
 	 {
 		
 		 Integer postId =commentService.deleteComment(editedCommentId);

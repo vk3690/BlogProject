@@ -15,6 +15,7 @@ public class Comment {
 	private String username;
 	private String mail;
 	private String userComment;
+	private Date createdAt;
 
 	public Post getPost() {
 		return post;
@@ -31,27 +32,33 @@ public class Comment {
 	public String getMail() {
 		return mail;
 	}
+
 	public void setMail(String mail) {
 		this.mail = mail;
 	}
 
-	private Date createdAt;
 	public Date getCreatedAt() {
 		return createdAt;
 	}
+
 	public void setCreatedAt(Date createdAt) {
 		this.createdAt = createdAt;
 	}
+
 	public Date getUpdateAt() {
 		return updateAt;
 	}
+
 	public void setUpdateAt(Date updateAt) {
 		this.updateAt = updateAt;
 	}
+
 	private Date updateAt;
+
 	public Integer getId() {
 		return id;
 	}
+
 	public void setId(Integer id) {
 		this.id = id;
 	}
@@ -59,12 +66,15 @@ public class Comment {
 	public String getUsername() {
 		return username;
 	}
+
 	public void setUsername(String username) {
 		this.username = username;
 	}
+
 	public String getUserComment() {
 		return userComment;
 	}
+
 	public void setUserComment(String userComment) {
 		this.userComment = userComment;
 	}

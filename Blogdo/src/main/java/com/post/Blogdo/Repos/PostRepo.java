@@ -17,10 +17,8 @@ public interface PostRepo extends JpaRepository<Post,Integer> {
 	
 public Page<Post> findAll(Pageable pages);
 
-
     @Query(value= "select post.username from post",nativeQuery = true)
     ArrayList<String> findAllUsername();
-
 
     @Query(value = "select * from (Select * from post where post.id in :listOfUsernames)" +
             " as foo where foo.username=:username",nativeQuery = true)
@@ -36,12 +34,10 @@ public Page<Post> findAll(Pageable pages);
             "foo.username in :filterAuthors",nativeQuery = true)
     ArrayList<Integer> filterByAuthorName(String[] filterAuthors, ArrayList<Integer> allIds);
 
-
     Page<Post> findByIdIn(List<Integer> alis, Pageable page);
 
     @Query(value = "select post.id from post",nativeQuery = true)
     ArrayList<Integer> findByIds();
-
 
     @Query(value= "select * from (select * from post  where post.updated_at BETWEEN :startDate AND :endDate) as" +
             " foo where foo.id in :allPostIds",nativeQuery = true)

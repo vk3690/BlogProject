@@ -24,13 +24,11 @@ public class CommentService {
 	@Autowired
 	private PostRepo postRepo;
 
-
 	public Optional<Comment> editComment(Integer id) {
 		return commentRepo.findById(id);
 	}
 
 	public void postComment(String comment, String username, String mail, Integer postId) {
-
 		Optional<Post> post = postRepo.findById(postId);
 		Post commentedPost = post.get();
 		commentModel.setPost(commentedPost);
@@ -40,27 +38,22 @@ public class CommentService {
 		commentModel.setMail(mail);
 		commentModel.setUserComment(comment);
 		commentRepo.save(commentModel);
-		//return bolgIdAndUsernames[1];
+
 	}
 
-
 	public Integer updateComment(Integer id, String updatedComment) {
-
 		Optional<Comment> commentModel = commentRepo.findById(id);
 		Comment commentModelValues = commentModel.get();
-
 		Post postId = commentModelValues.getPost();
 		commentModelValues.setUserComment(updatedComment);
 		commentModelValues.setUpdateAt(new Date());
 		commentRepo.save(commentModelValues);
 		return postId.getId();
-
 	}
 
 	public Integer deleteComment(Integer id) {
 		Optional<Comment> commentModel = commentRepo.findById(id);
 		Comment commentModelValues = commentModel.get();
-
 		Integer postId = commentModelValues.getPost().getId();
 		System.out.println();
 		System.out.println(postId + "   hjkn");
@@ -68,7 +61,6 @@ public class CommentService {
 		commentRepo.deleteById(id);
 		return postId;
 	}
-
 
 	public String deleteApiComment(Integer commentId) {
 
@@ -87,7 +79,6 @@ public class CommentService {
 	}
 
 	public String updateApiComment(Integer commentId, String updatedComment) {
-
 		MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication()
 				.getPrincipal();
 		Optional<Comment> comment = commentRepo.findById(commentId);
@@ -102,6 +93,5 @@ public class CommentService {
 		else{
 			return "not authorized to update comment";
 		}
-
 	}
 }

@@ -26,20 +26,17 @@ public class TagService {
         PostTag postTag = new PostTag();
         postTag.setCreatedAt(date);
         postTag.setUpdatedAt(date);
-        // Optional<Post> post = postRepo.findById(postId);
+
         postTag.setPost(post);
         postTag.setTag(tags);
         postTagRepo.save(postTag);
-
         String[] tagss = tags.split(",");
-
         for (String temp : tagss) {
             Tag tag = new Tag();
             tag.setTag(temp);
             tag.setPostId(post.getId());
             tagRepo.save(tag);
         }
-
     }
 
     public String getTagsOfBlog(Integer blogId) {
@@ -48,7 +45,6 @@ public class TagService {
     }
 
     public ArrayList<String> getTags() {
-
         Set<String> tags = tagRepo.filterAllTags();
         ArrayList<String> listOfTags = new ArrayList<>(tags);
         return listOfTags;

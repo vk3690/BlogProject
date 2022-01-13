@@ -48,11 +48,8 @@ public class SecurityConfig   {
         return authProvider;
     }
 
-
     @Autowired
     private JwtFilter jwtFilter;
-
-
     @Configuration
     @Order(1)
     @EnableWebSecurity
@@ -81,7 +78,7 @@ public class SecurityConfig   {
                     //  .antMatchers("/dashboard","/blog","/nextpage","/prevpage","/searchby","/filter",
                     //          "/sortby","/readblog","/signup").permitAll()
                     .antMatchers("/", "/dashboard", "/nextpage", "/prevpage", "/sortBy", "/searchby", "/filter"
-                            , "/readblog", "/login", "/writeblog", "/saveBlog", "/signup", "/saveregister", "/testq").permitAll()
+                            , "/readblog", "/login", "/writeblog", "/saveBlog", "/signup", "/saveregister", "/getBlogPage").permitAll()
                     .antMatchers("/resources/**").permitAll()
                     .anyRequest().authenticated()
                     .and()

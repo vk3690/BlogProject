@@ -42,15 +42,13 @@ public class PostService {
         postRepo.save(post);
     }
 
-
     public ArrayList<String> getAuthors() {
         ArrayList<String> allAuthors=  postRepo.findAllUsername();
-
         Set<String> setOfAuthors=new HashSet<>(allAuthors);
         allAuthors=new ArrayList<>(setOfAuthors);
         return allAuthors;
 }
-    public List<Post> testQ1(String searchKeyword, String tags, String author, Integer pageNo, Date startDate,
+    public List<Post> getBlogPage(String searchKeyword, String tags, String author, Integer pageNo, Date startDate,
                              Date endDate, String keyWordToBeSorted) {
         ArrayList<Integer> allPostedBlogIds = new ArrayList<>();
         String defaultStartDate="2021-12-25";
@@ -66,13 +64,6 @@ public class PostService {
         {
             System.out.println(e);
         }
-//        ArrayList<Integer> allPostedBlogIds = postRepo.findIdsOfBetweenDates(startDate,endDate, allPostBlogIds);
-        System.out.println("");
-          System.out.println("vhjnkm,  "+!startDateDefault.equals(startDate)+"   hjn564545");
-        System.out.println("");
-        //   ArrayList<Integer> getIdsByDate=blogRepo.findIdsBetweenDates(startDate,endDate);
-        // allPostedBlogIds.clear();
-        //allPostedBlogIds.addAll(getIdsByDate);
         String[] tagsToFilter = tags.split(",");
         String[] AuthorsToFilter = author.split(",");
         if(!searchKeyword.equals(""))
@@ -86,12 +77,10 @@ public class PostService {
         else{
             allPostedBlogIds=postRepo.findByIds();
         }
-
     if(!startDate.equals(defaultStartDate) || !endDate.equals(deafalutEndDate))
     {
         allPostedBlogIds=postRepo.findIdsOfBetweenDates(startDate,endDate,allPostedBlogIds);
     }
-
         if(!AuthorsToFilter[0].equals("") || !tagsToFilter[0].equals(""))
         {
             ArrayList<Integer> searchAuthors= postRepo.filterByAuthorName(AuthorsToFilter,allPostedBlogIds);
@@ -102,14 +91,15 @@ public class PostService {
         Pageable page = PageRequest.of(pageNo, 5, Sort.by(keyWordToBeSorted));
         Page<Post> pageOfBlogs = (Page<Post>) postRepo.findByIdIn(allPostedBlogIds,page);
         List<Post> blogPage= pageOfBlogs.getContent();
-
         return  blogPage;
     }
+
     public Optional<Post> getBlogToBeEdited(Integer blogId)
     {
         Optional<Post> blogModel= postRepo.findById(blogId);
         return blogModel;
     }
+
     public String updatePost(Integer blogId, String editedTitle, String editedBlog, String editedtags)
     {
         Optional<Post> getPostToUpdate= postRepo.findById(blogId);
@@ -134,7 +124,6 @@ public class PostService {
                 .getPrincipal();
         if(myUserDetails.getUsername().equals(postToDelete.getUsername()) ||
                 myUserDetails.getAuthorities().contains("ROLE_ADMIN")) {
-
             postRepo.deleteById(postId);
             return "post id deleted";
         }
@@ -142,6 +131,4 @@ public class PostService {
             return "not authorised to delete";
             }
     }
-        
-
 }

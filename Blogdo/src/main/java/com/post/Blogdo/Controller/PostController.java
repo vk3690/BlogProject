@@ -1,6 +1,4 @@
 package com.post.Blogdo.Controller;
-
-
 import com.post.Blogdo.Models.Post;
 import com.post.Blogdo.Repos.PostRepo;
 import com.post.Blogdo.Service.PostService;
@@ -18,7 +16,6 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
 
 @Controller
 public class PostController {
@@ -41,12 +38,9 @@ public class PostController {
                            RedirectAttributes redirectAttributes) {
         blogService.saveBlogPost(post);
         redirectAttributes.addAttribute("startpage", 0);
-
         tagService.storeTagsOfBlogs(post, tags);
-
         return "redirect:" + "/";
     }
-
 
     @RequestMapping("/sortby")
     public String sortBy(@RequestParam(value = "keywordToSearch", defaultValue = "") String keywordToSearch,
@@ -67,7 +61,6 @@ public class PostController {
             keywordToBeSorted="username";
 
         }
-
         redirectAttributes.addAttribute("keywordToSearch",keywordToSearch);
         redirectAttributes.addAttribute("tag",tag);
         redirectAttributes.addAttribute("author",author);
@@ -83,17 +76,12 @@ public class PostController {
     {
         Optional<Post> blogPost=postRepo.findById(blogId);
         Post blogPostToDisplay=blogPost.get();
-       // ArrayList<Comment> commentsOnBlogPost=commentService.getCommentsById(blogId);
-        System.out.println();
-        System.out.println(blogPostToDisplay.getComment().size());
-        System.out.println();
-        //String blogTags=blogService.blogTags(blogId);
         model.addAttribute("comments",blogPostToDisplay.getComment());
         model.addAttribute("blogDao",blogPostToDisplay);
-
-        	model.addAttribute("blogTags",blogPostToDisplay.getTag().getTag());
+        model.addAttribute("blogTags",blogPostToDisplay.getTag().getTag());
         return "Readblog.html";
     }
+
     @RequestMapping("/deleteblog")
     public String deleteBlog(@RequestParam("blogId") Integer blogId)
     {
@@ -101,16 +89,11 @@ public class PostController {
         return "redirect:"+"/";
     }
 
-
     @PostMapping("/editblog")
     public String editBlog(@RequestParam("blogId") Integer blogId,Model model)
     {
-
         Optional<Post> postToBeEdited=blogService.getBlogToBeEdited(blogId);
         String tagsOfBlogPost= tagService.getTagsOfBlog(blogId);
-        System.out.println("");
-        System.out.println(postToBeEdited.get().getTitle());
-        System.out.println("");
         model.addAttribute("postData",postToBeEdited.get());
        model.addAttribute("tags",tagsOfBlogPost);
         return "editblog.html";
@@ -123,12 +106,8 @@ public class PostController {
                                 RedirectAttributes redirectAttributes)
     {
         	blogService.updatePost(postId,editedTitle,editedBlog,editedtags);
-       // tagService.updateTagsOfBlog(postId,editedtags);
         return "redirect:"+"/";
     }
-
-
-
 
     @RequestMapping("/")
     public String redirectToDashboard(@RequestParam(value = "keywordToSearch", defaultValue = "") String keywordToSearch,
@@ -140,14 +119,13 @@ public class PostController {
                                       @RequestParam(value = "sortOrder",defaultValue = "UpdatedAt") String keywordToBeSorted,
                                       RedirectAttributes redirectAttributes)
     {
-        System.out.println("  kkl533"+tag);
-        List<Post> allBlogs=blogService.testQ1(keywordToSearch,tag,author,pageNo,startDate,endDate,keywordToBeSorted);
+
+        List<Post> allBlogs=blogService.getBlogPage(keywordToSearch,tag,author,pageNo,startDate,endDate,keywordToBeSorted);
         redirectAttributes.addAttribute("keywordToSearch",keywordToSearch);
         redirectAttributes.addAttribute("tag",tag);
         redirectAttributes.addAttribute("author",author);
         redirectAttributes.addAttribute("pageNo",pageNo);
         redirectAttributes.addAttribute("blogPosts",allBlogs);
-
         return "redirect:" + "/dashboard";
     }
 
@@ -176,8 +154,6 @@ public class PostController {
         sortOrderList.add("author");
         sortOrderList.add("title");
         model.addAttribute("tags",tags);
-       // System.out.println(tags.size());
-
         model.addAttribute("allblogs",pageOfBlogs);
         model.addAttribute("sortOrderList",sortOrderList);
         return "Dashboard.html";
@@ -192,10 +168,6 @@ public class PostController {
                              @RequestParam(value="author",defaultValue = "") String author,
                              RedirectAttributes redirectAttributes)
     {
-        System.out.println("");
-        System.out.println(" vikas "+keywordToSearch+"    nwf f ");
-        System.out.println("");
-
         redirectAttributes.addAttribute("keywordToSearch",keywordToSearch);
         redirectAttributes.addAttribute("tag",tag);
         redirectAttributes.addAttribute("author",author);
@@ -206,19 +178,11 @@ public class PostController {
         return "redirect:" + "/";
     }
 
-
     @RequestMapping("/searchby")
     public String searchBy(@RequestParam("keywordToSearch") String keywordToSearch,
-//								   @RequestParam("tag") String tag,
-//								   @RequestParam("author") String author,@RequestParam("pageNo") Integer pageNo,
                            RedirectAttributes redirectAttributes)
     {
         redirectAttributes.addAttribute("keywordToSearch", keywordToSearch);
-        //redirectAttributes.addAttribute("tags","");
-        //redirectAttributes.addAttribute("authors","");
-        System.out.println("");
-        System.out.println("nm"+keywordToSearch);
-        System.out.println();
         redirectAttributes.addAttribute("pageNo",0);
         return "redirect:" + "/";
     }
@@ -230,7 +194,6 @@ public class PostController {
                            @RequestParam(value = "sortOrder",defaultValue = "UpdatedAt") String keywordToBeSorted,
                            RedirectAttributes redirectAttributes)
     {
-
         pageNo=pageNo+1;
         redirectAttributes.addAttribute("keywordToSearch",keywordToSearch);
         redirectAttributes.addAttribute("tags",tags);
