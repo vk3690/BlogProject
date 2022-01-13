@@ -35,7 +35,7 @@ public class PostRest {
 
 
 
-    @GetMapping("/api/dash")
+    @GetMapping("/api/dashboard")
     public List<Post> redirectToDashboard(@RequestParam(name = "keywordToSearch", defaultValue = "") String keywordToSearch,
                                           @RequestParam(name  = "tag", defaultValue = "") String tag ,
                                           @RequestParam(name = "author", defaultValue = "") String author,

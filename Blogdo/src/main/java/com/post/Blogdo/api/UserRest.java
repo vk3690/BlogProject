@@ -27,14 +27,8 @@ public class UserRest {
     private JwtUtil jwtUtil;
 
     @PostMapping("/api/login")
-    public String AuthnticateUser(@RequestBody UserAuthentication authRequest) throws Exception {
-
-        String pw_hash = BCrypt.hashpw(authRequest.getPassword(),BCrypt.gensalt());
-        System.out.println(""+authRequest.getPassword());
-        System.out.println("it is working");
-        System.out.println(""+authRequest.getUserName());
+    public String AuthenticateUser(@RequestBody UserAuthentication authRequest) throws Exception {
         try {
-
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(authRequest.getUserName(),authRequest.getPassword())
             );
