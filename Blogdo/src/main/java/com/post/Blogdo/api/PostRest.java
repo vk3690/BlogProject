@@ -45,7 +45,7 @@ public class PostRest {
                                           @RequestParam(name  = "sortOrder",defaultValue = "UpdatedAt") String keywordToBeSorted)
     {
 
-        List<Post> allBlogs=postService.testQ1(keywordToSearch,tag,author,pageNo,startDate,endDate,keywordToBeSorted);
+        List<Post> allBlogs=postService.getBlogPage(keywordToSearch,tag,author,pageNo,startDate,endDate,keywordToBeSorted);
 
         return allBlogs;
     }
